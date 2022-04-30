@@ -1,0 +1,14 @@
+# ninja log v5
+1	245	6730474879871421	build.ninja	863d4db04171a702
+1	751	6729500459789249	CMakeFiles/Kursach.dir/Menues.cpp.obj	c6644490d0003a7a
+3	640	6729456605886940	CMakeFiles/Kursach.dir/main.cpp.obj	7703055935266810
+3	658	6729496337916042	CMakeFiles/Kursach.dir/Account.cpp.obj	f294bbbcaadea8e7
+2	505	6729498414499441	CMakeFiles/Kursach.dir/DB_accounts.cpp.obj	1e400c25ff7bc817
+17	587	6727638932212599	CMakeFiles/Kursach.dir/Hash.cpp.obj	5adfb02ffb221398
+752	883	6729500461084475	Kursach.exe	85bb3a12f9dacbb4
+7	656	6729496337891036	CMakeFiles/Kursach.dir/Core.cpp.obj	c10d68ea12852f50
+13	720	6729456606687077	CMakeFiles/Kursach.dir/MySpace.cpp.obj	abe2d2c4f173fbb4
+12	507	6726037057427099	CMakeFiles/Kursach.dir/sha256.cpp.obj	dd3dbdc6bfae8986
+14	643	6729428234709524	CMakeFiles/Kursach.dir/globals.cpp.obj	c98cb400f10ab072
+8	526	6729496336575810	CMakeFiles/Kursach.dir/Hash/Hash.cpp.obj	f669f8099286be6
+5	552	6729496336850856	CMakeFiles/Kursach.dir/Hash/sha256.cpp.obj	1472651fd43fe999
