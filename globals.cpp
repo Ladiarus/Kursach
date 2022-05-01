@@ -2,5 +2,10 @@
 #include <string>
 #include "DB_accounts.h"
 
-std::string globals::filenameAccounts = "accounts.txt";
-DB_accounts globals::db_accounts(filenameAccounts);
+namespace globals
+{
+    std::string filenameAccounts = "accounts.txt";
+    std::string filenameStudents = "students.txt";
+    DB_accounts db_accounts(filenameAccounts);
+    DB_students db_students(filenameStudents);
+}

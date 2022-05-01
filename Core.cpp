@@ -10,6 +10,7 @@ void mainFunc()
 {
     system("");
     globals::db_accounts.update();
+    globals::db_students.update();
     while(true)
     {
         if (mainMenu())
@@ -118,5 +119,34 @@ Account *signUp()
     Account* acc = new Account(login, password, 1, false);
     return acc;
 
+}
+
+string inputNumber()
+{
+    string s;
+    while(true)
+    {
+        char c = getch();
+        if(c == 13) // Enter
+        {
+            if(s.length()==6)
+                break;
+        }
+        else if(c == 8) // Backspace
+        {
+            if(s.length()!=0)
+            {
+                cout << "\b \b";
+                s.pop_back();
+            }
+        }
+        else if(isdigit(c))
+        {
+            s+=c;
+            cout << c;
+        }
+    }
+    cout<<endl;
+    return s;
 }
 

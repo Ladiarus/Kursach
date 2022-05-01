@@ -6,3 +6,4 @@ void mainFunc();
 void signIn(string login, string password);
 string inputPassword();
 Account* signUp();
+string inputNumber();

@@ -47,7 +47,7 @@ std::istream &operator>>(istream &is, Account &f) {
     return is;
 }
 
-std::ostream &operator<<(ostream &os, Account &f) {
+std::ostream &operator << (ostream &os, Account &f) {
     if(typeid(os) == typeid(ofstream))
     {
         os << endl;

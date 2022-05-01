@@ -1,5 +1,7 @@
 #include <string>
 #include "DB_accounts.h"
+#include "MySpace.h"
+
 using namespace std;
 
 DB_accounts::DB_accounts(string file) {
@@ -10,10 +12,7 @@ Account& createMainAdmin()
     Account *acc = new Account("admin", "admin", 0, true);
     return *acc;
 }
-bool isEmpty(std::ifstream& file)
-{
-    return file.peek() == std::ifstream::traits_type::eof();
-}
+
 void DB_accounts::update() {
     accounts.clear();
     fout.close();
@@ -24,7 +23,7 @@ void DB_accounts::update() {
         fout.close();
     }
 
-    if(isEmpty(fin))
+    if(isFileEmpty(fin))
     {
         this->add(createMainAdmin());
     }

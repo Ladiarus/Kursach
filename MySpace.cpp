@@ -1,5 +1,6 @@
 #include"MySpace.h"
 #include <cstdlib>
+#include <fstream>
 
 
 using namespace std;
@@ -100,4 +101,9 @@ void input(int &x, int a, int b, vector<int> additionalValues)
         else
             return;
     }
+}
+
+bool isFileEmpty(ifstream &file)
+{
+    return file.peek() == std::ifstream::traits_type::eof();
 }

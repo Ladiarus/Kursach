@@ -12,6 +12,36 @@ using namespace std;
 namespace width
 {
     int id = 6, login = 15, hashed_password = 64, access = 7;
+    int name = 32, number = 8;
+    //! INAD:IKG:LANG:HIST:POLIT ,  MATH:OOP:TRPO:PHYS:OAIP
+    int credits[5] = {5, 3, 4, 4, 6};
+    int exams[5] = {5, 3, 4, 4, 5};
+    int sumStud()
+    {
+        int sum = 0;
+        sum += name + number;
+        sum += sumCredits();
+        sum += sumExams();
+        return sum;
+    }
+    int sumCredits()
+    {
+        int sum=0;
+        for(int i : credits)
+        {
+            sum += i;
+        }
+        return sum + 4;
+    }
+    int sumExams()
+    {
+        int sum=0;
+        for(int i : exams)
+        {
+            sum += i;
+        }
+        return sum + 4;
+    }
 }
 
 
@@ -33,6 +63,7 @@ bool chooseOption(vector<void (*)()> args) {
     return false;
 
 }
+
 bool mainMenu() {
 
     std::cout<<"Main menu:\n"
@@ -42,7 +73,6 @@ bool mainMenu() {
     bool b = chooseOption({signIn_select, signUp_select});
     return b;
 }
-
 
 void signIn_select() {
     string login;
@@ -87,6 +117,7 @@ void userMenuUser()
 {
     system("cls");
     cout<<"User Menu:\n";
+    students::show();
     system("pause");
 }
 
@@ -426,3 +457,147 @@ void accounts::show()
 }
 
 #pragma endregion
+
+#pragma region students
+
+#pragma endregion
+
+void students::show_select()
+{
+
+}
+
+void students::add_select()
+{
+
+}
+
+void students::edit_select()
+{
+
+}
+
+void students::delete_select()
+{
+
+}
+
+void students::show()
+{
+    cout.fill('=');
+    cout << setw( width::sumStud() + 5) << '=' << endl;
+    cout.fill(' ');
+
+    //! INAD:IKG:LANG:HIST:POLIT ,  MATH:OOP:TRPO:PHYS:OAIP
+
+    cout << '|' << setw(width::name + 1) << '|' << setw(width::number + 1) << '|'
+         << setw(width::sumCredits()) << centerString("Credits", width::sumCredits(), ' ') << '|'
+         << setw(width::sumExams()) << centerString("Exams", width::sumExams(), ' ') << '|' <<endl;
+
+    cout << '|' << setw(width::name) << centerString("Name", width::name, ' ') << setw(1) << "|";
+    cout << setw(width::number) << centerString("Group#", width::number, ' ') << setw(1) << '|';
+    cout << setw(width::credits[0]) << "INAD" << setw(1) << ':';
+    cout << setw(width::credits[1]) << "IKG" << setw(1) << ':';
+    cout << setw(width::credits[2]) << "LANG" << setw(1) << ':';
+    cout << setw(width::credits[3]) << "HIST" << setw(1) << ':';
+    cout << left << setw(width::credits[4]) << "POLIT" << setw(1) << '|';
+
+    cout << right << setw(width::exams[0]) << "MATH" << setw(1) << ':';
+    cout << setw(width::exams[1]) << "OOP" << setw(1) << ':';
+    cout << setw(width::exams[2]) << "TRPO" << setw(1) << ':';
+    cout << setw(width::exams[3]) << "PHYS" << setw(1) << ':';
+    cout << left << setw(width::exams[4]) << "OAIP" << setw(1) << '|' << endl;
+
+    cout.fill('=');
+    cout << setw(width::sumStud() + 5) << '=' << endl;
+    cout.fill(' ');
+
+    int idx=0;
+    bool is_back = false;
+    for(Student &stud : globals::db_students.students)
+    {
+        if(idx % 2!=0)
+        {
+            cout << BACKGROUND_GREY;
+            is_back = true;
+        }
+        else
+        {
+            cout << DEFAULT_BACKGROUND_COLOR;
+            is_back = false;
+        }
+
+        cout << '|';
+        cout << setw(width::name) << left << stud.name << setw(1) << '|';
+        cout << setw(width::number) << centerString(stud.number, width::number, ' ') << setw(1) << '|';
+        cout << right;
+        for(int i = 0; i < 5; i++)
+        {
+            bool b = stud.credits[i];
+            if(is_back)
+                cout << BACKGROUND_GREY;
+            int curr_w = width::credits[i];
+            if(i == 4)
+                curr_w--;
+            if(b)
+            {
+                cout << GREEN;
+                cout << setw(curr_w) << 'P';
+            }
+            else
+            {
+
+                cout << RED;
+                cout << setw(curr_w) << 'F';
+            }
+
+            if(i != 4)
+                cout << ' ';
+            cout << DEFAULT_COLOR;
+        }
+        if(is_back)
+            cout << BACKGROUND_GREY;
+        cout << " |";
+        cout << DEFAULT_COLOR;
+        for(int i = 0; i < 5; i++)
+        {
+            int x = stud.exams[i];
+            if(is_back)
+                cout << BACKGROUND_GREY;
+            int curr_w = width::exams[i];
+            if(i == 4)
+                curr_w--;
+
+            if(x > 4)
+            {
+                cout << GREEN;
+            }
+            else if(x == 4)
+            {
+                cout << YELLOW;
+            }
+            else
+            {
+                cout << RED;
+            }
+
+            cout << setw(curr_w) << x;
+
+            if(i != 4)
+                cout << ' ';
+            cout << DEFAULT_COLOR;
+        }
+        if(is_back)
+            cout << BACKGROUND_GREY;
+        cout << " |";
+        cout << DEFAULT_COLOR;
+        cout << endl;
+        /*cout.fill('-');
+        cout << setw(width::sumStud() + 5) << '-' << endl;
+        cout.fill(' ');*/
+        cout << DEFAULT_BACKGROUND_COLOR;
+        idx++;
+    }
+
+
+}

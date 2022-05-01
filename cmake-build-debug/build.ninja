@@ -103,6 +103,18 @@ build CMakeFiles/Kursach.dir/globals.cpp.obj: CXX_COMPILER__Kursach_Debug C$:/Us
   OBJECT_DIR = CMakeFiles\Kursach.dir
   OBJECT_FILE_DIR = CMakeFiles\Kursach.dir
 
+build CMakeFiles/Kursach.dir/Student.cpp.obj: CXX_COMPILER__Kursach_Debug C$:/Users/Yaroslav/Documents/Kursach/Student.cpp || cmake_object_order_depends_target_Kursach
+  DEP_FILE = CMakeFiles\Kursach.dir\Student.cpp.obj.d
+  FLAGS = -g -std=gnu++20
+  OBJECT_DIR = CMakeFiles\Kursach.dir
+  OBJECT_FILE_DIR = CMakeFiles\Kursach.dir
+
+build CMakeFiles/Kursach.dir/DB_students.cpp.obj: CXX_COMPILER__Kursach_Debug C$:/Users/Yaroslav/Documents/Kursach/DB_students.cpp || cmake_object_order_depends_target_Kursach
+  DEP_FILE = CMakeFiles\Kursach.dir\DB_students.cpp.obj.d
+  FLAGS = -g -std=gnu++20
+  OBJECT_DIR = CMakeFiles\Kursach.dir
+  OBJECT_FILE_DIR = CMakeFiles\Kursach.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Kursach
@@ -111,7 +123,7 @@ build CMakeFiles/Kursach.dir/globals.cpp.obj: CXX_COMPILER__Kursach_Debug C$:/Us
 #############################################
 # Link the executable Kursach.exe
 
-build Kursach.exe: CXX_EXECUTABLE_LINKER__Kursach_Debug CMakeFiles/Kursach.dir/main.cpp.obj CMakeFiles/Kursach.dir/Account.cpp.obj CMakeFiles/Kursach.dir/Core.cpp.obj CMakeFiles/Kursach.dir/Menues.cpp.obj CMakeFiles/Kursach.dir/MySpace.cpp.obj CMakeFiles/Kursach.dir/DB_accounts.cpp.obj CMakeFiles/Kursach.dir/Hash/sha256.cpp.obj CMakeFiles/Kursach.dir/Hash/Hash.cpp.obj CMakeFiles/Kursach.dir/globals.cpp.obj
+build Kursach.exe: CXX_EXECUTABLE_LINKER__Kursach_Debug CMakeFiles/Kursach.dir/main.cpp.obj CMakeFiles/Kursach.dir/Account.cpp.obj CMakeFiles/Kursach.dir/Core.cpp.obj CMakeFiles/Kursach.dir/Menues.cpp.obj CMakeFiles/Kursach.dir/MySpace.cpp.obj CMakeFiles/Kursach.dir/DB_accounts.cpp.obj CMakeFiles/Kursach.dir/Hash/sha256.cpp.obj CMakeFiles/Kursach.dir/Hash/Hash.cpp.obj CMakeFiles/Kursach.dir/globals.cpp.obj CMakeFiles/Kursach.dir/Student.cpp.obj CMakeFiles/Kursach.dir/DB_students.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Kursach.dir

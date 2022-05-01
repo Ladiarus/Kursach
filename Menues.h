@@ -20,7 +20,18 @@ namespace accounts
     void approveRequest();
     void show();
 }
+namespace students
+{
+    void show_select();
+    void add_select();
+    void edit_select();
+    void delete_select();
+    void show();
+}
 namespace width
 {
     extern int id, login, hashed_password, access;
+    extern int name, number, credits[5], exams[5];
+    extern int sumStud(), sumCredits(), sumExams();
+
 }

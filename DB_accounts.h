@@ -12,8 +12,8 @@ public:
     ofstream fout;
     vector<Account> accounts;
     void update();
-    void save();;
-    void add(Account& acc);;
+    void save();
+    void add(Account& acc);
     int findByLogin(string login);
     void deleteAccount(int idx);
     void approveAccount(int idx);

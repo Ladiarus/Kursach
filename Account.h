@@ -14,8 +14,8 @@ public:
     int access_level=1;
     bool is_approved= false;
 
-    friend std::istream &operator>>(std::istream &is, Account &f);
-    friend std::ostream& operator <<(std::ostream& output, Account& f);
+    friend std::istream &operator >> (std::istream &is, Account &f);
+    friend std::ostream& operator <<(std::ostream &os, Account& f);
 };
 
 

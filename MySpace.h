@@ -3,13 +3,15 @@
 #include <unistd.h>
 #include <vector>
 
-#define RED "\033[31m"
+#define RED "\033[31;1m"
 #define GREEN "\033[32m"
 #define YELLOW "\033[33m"
 #define BLUE "\033[34;1m"
 #define CYAN "\033[36;1m"
 #define DEFAULT_COLOR "\033[m"
 #define PINK "\033[35;1m"
+#define BACKGROUND_GREY "\033[48;5;235m"
+#define DEFAULT_BACKGROUND_COLOR "\033[40m"
 
 #define CLEAR_LINE() (cout<<"\033[2K")
 #define CLEAR_TO_END() (cout<<"\033[0J")
@@ -49,3 +51,4 @@ void input(int& x, int a, int b, vector<int> additionalValues);
 void input(double& x, double a, double b);
 void input(bool& b);
 std::string centerString(const std::string& s, int width, char fill_with);
+bool isFileEmpty(std::ifstream& file);
