@@ -12,7 +12,7 @@ using namespace std;
 namespace width
 {
     int id = 6, login = 15, hashed_password = 64, access = 7;
-    int name = 32, number = 8;
+    int name = 32, number = 8, debts = 7, average_mark = 5;
     //! INAD:IKG:LANG:HIST:POLIT ,  MATH:OOP:TRPO:PHYS:OAIP
     int credits[5] = {5, 3, 4, 4, 6};
     int exams[5] = {5, 3, 4, 4, 5};
@@ -22,6 +22,9 @@ namespace width
         sum += name + number;
         sum += sumCredits();
         sum += sumExams();
+        sum += average_mark;
+        sum += debts;
+        sum += id;
         return sum;
     }
     int sumCredits()
@@ -89,6 +92,7 @@ void signIn_select() {
 }
 
 void signUp_select() {
+    system("cls");
     std::cout<<"signUp\n";
 
     Account *acc = signUp();
@@ -106,8 +110,11 @@ void userMenuAdmin()
         system("cls");
         cout<<"Admin Menu:\n";
         cout<<"-----DB <Accounts>-----\n";
-        cout<<"1 - Show\n2 - Add\n3 - Edit\n4 - Delete\n5 - Approve requests\n0 - Back\n";
-        if(chooseOption({accounts::show_select, accounts::add_select, accounts::edit_select, accounts::delete_select, accounts::approveRequests_select}))
+        cout<<"1 - Show\n2 - Add\n3 - Edit\n4 - Delete\n5 - Approve requests\n\n";
+        cout<<"-----DB <Students>-----\n";
+        cout<<"6 - Show\n7 - Add\n8 - Edit\n9 - Delete\n0 - Back\n";
+        if(chooseOption({accounts::show_select, accounts::add_select, accounts::edit_select, accounts::delete_select, accounts::approveRequests_select,
+                         students::show_select, students::add_select, students::edit_select, students::delete_select}))
             return;
     }
 
@@ -116,7 +123,6 @@ void userMenuAdmin()
 void userMenuUser()
 {
     system("cls");
-    cout<<"User Menu:\n";
     students::show();
     system("pause");
 }
@@ -348,7 +354,7 @@ void accounts::delete_select()
         input(idx, 2, globals::db_accounts.accounts.size(), {0});
         if (idx == 0)
             return;
-        cout << "Do you really want to " << RED << "DELETE" << DEFAULT_COLOR << " this account? [y/n]\n";
+        cout << "Do you really want to " << RED << "DELETE " << DEFAULT_COLOR << globals::db_accounts.accounts[idx - 1].login << " [y/n]\n";
         bool b;
         input(b);
         if (b)
@@ -460,11 +466,11 @@ void accounts::show()
 
 #pragma region students
 
-#pragma endregion
-
 void students::show_select()
 {
-
+    system("cls");
+    show();
+    system("pause");
 }
 
 void students::add_select()
@@ -479,23 +485,43 @@ void students::edit_select()
 
 void students::delete_select()
 {
-
+    while(true)
+    {
+        system("cls");
+        show();
+        int idx;
+        cout << "Choose student to " << RED << "DELETE" << DEFAULT_COLOR << endl;
+        cout << "0 - BACK\n";
+        input(idx, 1, globals::db_students.students.size(), {0});
+        if (idx == 0)
+            return;
+        cout << "Do you really want to " << RED << "DELETE " << DEFAULT_COLOR << globals::db_students.students[idx - 1].name << " [y/n]\n";
+        bool b;
+        input(b);
+        if (b)
+            globals::db_students.deleteStudent(idx - 1);
+        cout << "Done!\n";
+        system("pause");
+    }
 }
 
 void students::show()
 {
     cout.fill('=');
-    cout << setw( width::sumStud() + 5) << '=' << endl;
+    cout << setw( width::sumStud() + 8) << '=' << endl;
     cout.fill(' ');
 
     //! INAD:IKG:LANG:HIST:POLIT ,  MATH:OOP:TRPO:PHYS:OAIP
 
-    cout << '|' << setw(width::name + 1) << '|' << setw(width::number + 1) << '|'
+    cout << '|' <<setw(width::id + 1) << '|' << setw(width::name + 1) << '|' << setw(width::number + 1) << '|'
          << setw(width::sumCredits()) << centerString("Credits", width::sumCredits(), ' ') << '|'
-         << setw(width::sumExams()) << centerString("Exams", width::sumExams(), ' ') << '|' <<endl;
+         << setw(width::sumExams()) << centerString("Exams", width::sumExams(), ' ') << '|'
+         << setw(width::average_mark + 1) << '|' << setw(width::debts +1 ) << '|' << endl;
 
-    cout << '|' << setw(width::name) << centerString("Name", width::name, ' ') << setw(1) << "|";
+    cout << '|' << setw(width::id) << centerString("ID", width::id, ' ') << setw(1) << '|';
+    cout << setw(width::name) << centerString("Name", width::name, ' ') << setw(1) << '|';
     cout << setw(width::number) << centerString("Group#", width::number, ' ') << setw(1) << '|';
+
     cout << setw(width::credits[0]) << "INAD" << setw(1) << ':';
     cout << setw(width::credits[1]) << "IKG" << setw(1) << ':';
     cout << setw(width::credits[2]) << "LANG" << setw(1) << ':';
@@ -506,17 +532,20 @@ void students::show()
     cout << setw(width::exams[1]) << "OOP" << setw(1) << ':';
     cout << setw(width::exams[2]) << "TRPO" << setw(1) << ':';
     cout << setw(width::exams[3]) << "PHYS" << setw(1) << ':';
-    cout << left << setw(width::exams[4]) << "OAIP" << setw(1) << '|' << endl;
+    cout << left << setw(width::exams[4]) << "OAIP" << setw(1) << '|';
+
+    cout << setw(width::average_mark) << centerString("Avg", width::average_mark, ' ') << setw(1) << '|';
+    cout << setw(width::debts) << centerString("Debts", width::debts, ' ') << setw(1) << '|' << endl;
 
     cout.fill('=');
-    cout << setw(width::sumStud() + 5) << '=' << endl;
+    cout << setw(width::sumStud() + 8) << '=' << endl;
     cout.fill(' ');
 
-    int idx=0;
+    int idx=1;
     bool is_back = false;
     for(Student &stud : globals::db_students.students)
     {
-        if(idx % 2!=0)
+        if(idx % 2==0)
         {
             cout << BACKGROUND_GREY;
             is_back = true;
@@ -527,7 +556,8 @@ void students::show()
             is_back = false;
         }
 
-        cout << '|';
+        cout << '|' << setw(width::id) << centerString(idx < 10 ? ("0" + to_string(idx)) : to_string(idx), width::id, ' ')
+             << setw(1) << '|';
         cout << setw(width::name) << left << stud.name << setw(1) << '|';
         cout << setw(width::number) << centerString(stud.number, width::number, ' ') << setw(1) << '|';
         cout << right;
@@ -550,7 +580,6 @@ void students::show()
                 cout << RED;
                 cout << setw(curr_w) << 'F';
             }
-
             if(i != 4)
                 cout << ' ';
             cout << DEFAULT_COLOR;
@@ -590,14 +619,15 @@ void students::show()
         if(is_back)
             cout << BACKGROUND_GREY;
         cout << " |";
+        cout << fixed <<setw(width::average_mark) << setprecision(1) << stud.average_mark << setw(1) << "|";
+        if(stud.debts == 0)
+            cout << GREEN;
+        cout <<setw(width::debts) << stud.debts;
+        cout << WHITE <<'|';
         cout << DEFAULT_COLOR;
         cout << endl;
-        /*cout.fill('-');
-        cout << setw(width::sumStud() + 5) << '-' << endl;
-        cout.fill(' ');*/
-        cout << DEFAULT_BACKGROUND_COLOR;
         idx++;
     }
 
-
 }
+#pragma endregion

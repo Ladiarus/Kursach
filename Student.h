@@ -14,7 +14,10 @@ public:
     bool credits[5];
     int exams[5];
     string number;
+    int debts;
+    double average_mark;
 
+    void update();
     friend std::istream &operator >> (std::istream &is, Student &f);
     friend std::ostream& operator << (std::ostream &os, Student& f);
 };

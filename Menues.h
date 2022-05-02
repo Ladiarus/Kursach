@@ -31,7 +31,7 @@ namespace students
 namespace width
 {
     extern int id, login, hashed_password, access;
-    extern int name, number, credits[5], exams[5];
+    extern int name, number, credits[5], exams[5], debts, average_mark;
     extern int sumStud(), sumCredits(), sumExams();
 
 }

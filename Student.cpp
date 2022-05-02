@@ -18,6 +18,7 @@ Student::Student(string name, bool *credits, int *exams, string number)
     this->number = number;
     *this->credits = credits;
     *this->exams = *exams;
+    update();
 }
 
 std::istream &operator>>(istream &is, Student &f)
@@ -33,6 +34,7 @@ std::istream &operator>>(istream &is, Student &f)
         for(int &i : f.exams)
             is >> i;
     }
+    f.update();
     return is;
 }
 
@@ -47,10 +49,35 @@ std::ostream &operator<<(ostream &os, Student &f)
         os << f.number <<' ';
         for(bool i : f.credits)
             os << i << ' ';
-        for(int i : f.exams)
-            os << i << ' ';
+        for(int i = 0; i < 5; i++)
+        {
+            os << f.exams[i];
+            if(i != 4)
+                os << ' ';
+        }
     }
+    f.update();
     return os;
+}
+
+void Student::update()
+{
+    average_mark = 0;
+    debts = 0;
+    for (int i : exams)
+    {
+        average_mark += i;
+        if(i < 4)
+            debts++;
+    }
+    average_mark /= 5;
+
+    for(bool b : credits)
+    {
+        if(!b)
+            debts++;
+    }
+
 }
 
 
