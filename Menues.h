@@ -19,6 +19,7 @@ namespace accounts
     void rejectRequest();
     void approveRequest();
     void show();
+    void showTop();
 }
 namespace students
 {
@@ -27,6 +28,7 @@ namespace students
     void edit_select();
     void delete_select();
     void show();
+    void showTop();
 }
 namespace width
 {

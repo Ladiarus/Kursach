@@ -215,123 +215,127 @@ void accounts::edit_select()
         if (globals::db_accounts.accounts.size() == 1)
         {
             cout << "There is only one " << GREEN << "Main Admin" << DEFAULT_COLOR << endl;
+            system("pause");
             return;
         }
 
         accounts::show();
-
         int idx;
         cout << "Choose account to " << CYAN << "edit" << DEFAULT_COLOR << endl;
         cout << "0 - BACK\n";
         input(idx, 2, globals::db_accounts.accounts.size(), {0});
         if (idx == 0)
             return;
-
-        TO_POSITION(6, 0);
-        CLEAR_TO_END();
-        TO_POSITION(4, 0);
-        CLEAR_LINE();
-
-        Account &acc = globals::db_accounts.accounts[idx - 1];
-        cout << '|';
-        cout << setw(width::id) << centerString(idx < 10 ? ("0" + to_string(idx)) : to_string(idx), width::id, ' ')
-             << setw(1) << '|';
-        cout << setw(width::login) << left << acc.login << setw(1) << '|';
-        cout << setw(width::hashed_password) << left << acc.hashed_password << setw(1) << '|';
-        cout << setw(width::access) << centerString(acc.access_level == 0 ? "Admin" : "User", width::access, ' ')
-             << setw(1) << '|';
-        DOWN_LINES(2);
-
-        int choice;
-        cout << "Choose field to " << CYAN << "edit" << DEFAULT_COLOR << endl;
-        cout << "1 - Login\n2 - Password\n3 - Access level\n0 - Back\n";
-        bool is_back = false;
         while (true)
         {
-            choice = getch();
-            choice -= '0';
-            if (choice == 0)
+            system("cls");
+            accounts::showTop();
+
+            Account &acc = globals::db_accounts.accounts[idx - 1];
+            cout << '|';
+            cout << setw(width::id) << centerString(idx < 10 ? ("0" + to_string(idx)) : to_string(idx), width::id, ' ')
+                 << setw(1) << '|';
+            cout << setw(width::login) << left << acc.login << setw(1) << '|';
+            cout << setw(width::hashed_password) << left << acc.hashed_password << setw(1) << '|';
+            cout << setw(width::access) << centerString(acc.access_level == 0 ? "Admin" : "User", width::access, ' ')
+                 << setw(1) << '|' << endl;
+
+            cout.fill('=');
+            cout << setw(width::id + width::login + width::hashed_password + width::access + 5) << '=' << endl;
+            cout.fill(' ');
+
+
+            int choice;
+            cout << "Choose field to " << CYAN << "edit" << DEFAULT_COLOR << endl;
+            cout << "1 - Login\n2 - Password\n3 - Access level\n0 - Back\n";
+            bool is_back = false;
+            while (true)
             {
-                is_back = true;
-                break;
-
-            }
-            if (choice <= 3 && choice > 0)
-            {
-                break;
-            }
-
-        }
-
-        if(is_back)
-            continue;
-
-        TO_POSITION(6, 0);
-        CLEAR_TO_END();
-
-        switch (choice)
-        {
-            case 1:
-            {
-                string login;
-                cout << "New login: ";
-                if (cin.peek() == '\n')
-                    cin.get();
-                getline(cin, login);
-                if (login.find(' ') != -1)
+                choice = getch();
+                choice -= '0';
+                if (choice == 0)
                 {
-                    cout << "Login can't contain spaces\n";
-                    system("pause");
+                    is_back = true;
+                    break;
+
+                }
+                if (choice <= 3 && choice > 0)
+                {
                     break;
                 }
-                if (globals::db_accounts.findByLogin(login) != -1)
-                {
-                    cout << "Login already exist\n";
-                    system("pause");
-                    break;
-                }
-                acc.login = login;
-                cout << "Done!\n";
-                break;
+
             }
-            case 2:
+
+            if (is_back)
+                break;
+
+            UP_LINES(5);
+            CLEAR_TO_END();
+
+            switch (choice)
             {
-                string password;
-                while (true)
+                case 1:
                 {
-                    cout << "New password: \n";
-                    cout << "Confirm password: ";
-                    UP_LINE();
-                    TO_COLUMN(15);
-                    password = inputPassword();
-                    TO_COLUMN(19);
-                    if (password == inputPassword())
+                    string login;
+                    cout << "New login: ";
+                    if (cin.peek() == '\n')
+                        cin.get();
+                    getline(cin, login);
+                    if (login.find(' ') != -1)
                     {
+                        cout << "Login can't contain spaces\n";
+                        system("pause");
                         break;
                     }
-                    cout << "Passwords are different\n";
-                    system("pause");
-                    UP_LINES(4);
-                    CLEAR_TO_END();
+                    if (globals::db_accounts.findByLogin(login) != -1)
+                    {
+                        cout << "Login already exist\n";
+                        system("pause");
+                        break;
+                    }
+                    acc.login = login;
+                    cout << "Done!\n";
+                    break;
                 }
-                string salt;
-                acc.hashed_password = hashString(password, salt);
-                acc.salt = salt;
-                cout << "Done!\n";
-                break;
-            }
-            case 3:
-            {
-                int access_level;
-                cout<<"New access level of account:\n0 - Admin\n1 - User\n";
+                case 2:
+                {
+                    string password;
+                    while (true)
+                    {
+                        cout << "New password: \n";
+                        cout << "Confirm password: ";
+                        UP_LINE();
+                        TO_COLUMN(15);
+                        password = inputPassword();
+                        TO_COLUMN(19);
+                        if (password == inputPassword())
+                        {
+                            break;
+                        }
+                        cout << "Passwords are different\n";
+                        system("pause");
+                        UP_LINES(4);
+                        CLEAR_TO_END();
+                    }
+                    string salt;
+                    acc.hashed_password = hashString(password, salt);
+                    acc.salt = salt;
+                    cout << "Done!\n";
+                    break;
+                }
+                case 3:
+                {
+                    int access_level;
+                    cout << "New access level of account:\n0 - Admin\n1 - User\n";
 
-                input(access_level, 0, 1);
-                acc.access_level = access_level;
-                cout << "Done!\n";
-                break;
+                    input(access_level, 0, 1);
+                    acc.access_level = access_level;
+                    cout << "Done!\n";
+                    break;
+                }
             }
+            globals::db_accounts.save();
         }
-        globals::db_accounts.save();
     }
 }
 
@@ -428,18 +432,7 @@ void accounts::approveRequest()
 
 void accounts::show()
 {
-    cout.fill('=');
-    cout << setw(width::id + width::login + width::hashed_password + width::access + 5) << '=' << endl;
-    cout.fill(' ');
-
-    cout << '|' << setw(width::id) << centerString("ID", width::id, ' ') << setw(1) << "|";
-    cout << setw(width::login) << centerString("Login", width::login, ' ') << setw(1) << '|';
-    cout << setw(width::hashed_password) << centerString("Hashed password", width::hashed_password, ' ') << setw(1) << '|';
-    cout << setw(width::access) << centerString("Access", width::access, ' ') << setw(1) << '|' << endl;
-
-    cout.fill('=');
-    cout << setw(width::id + width::login + width::hashed_password + width::access + 5) << '=' << endl;
-    cout.fill(' ');
+    accounts::showTop();
 
     for(int id = 2; id <= globals::db_accounts.accounts.size();id++)
     {
@@ -462,6 +455,22 @@ void accounts::show()
     cout<< YELLOW <<"Yellow" << DEFAULT_COLOR << " accounts are not approved\n";
 }
 
+void accounts::showTop()
+{
+    cout.fill('=');
+    cout << setw(width::id + width::login + width::hashed_password + width::access + 5) << '=' << endl;
+    cout.fill(' ');
+
+    cout << '|' << setw(width::id) << centerString("ID", width::id, ' ') << setw(1) << "|";
+    cout << setw(width::login) << centerString("Login", width::login, ' ') << setw(1) << '|';
+    cout << setw(width::hashed_password) << centerString("Hashed password", width::hashed_password, ' ') << setw(1) << '|';
+    cout << setw(width::access) << centerString("Access", width::access, ' ') << setw(1) << '|' << endl;
+
+    cout.fill('=');
+    cout << setw(width::id + width::login + width::hashed_password + width::access + 5) << '=' << endl;
+    cout.fill(' ');
+}
+
 #pragma endregion
 
 #pragma region students
@@ -475,12 +484,208 @@ void students::show_select()
 
 void students::add_select()
 {
+    system("cls");
+    string name, number;
+    bool credits[5];
+    int exams[5];
+    cout << "Input name: ";
+    name = inputName();
 
+    cout << "Input number: ";
+    number = inputNumber();
+
+    cout << "Input credits:\n";
+    inputCredits(credits);
+
+    cout << "Input exams:\n";
+    inputExams(exams);
+
+    Student stud(name, number, credits, exams);
+
+    globals::db_students.add(stud);
+    cout << "Done!\n";
+    system("pause");
 }
 
 void students::edit_select()
 {
+    while(true)
+    {
+        system("cls");
 
+        if (globals::db_students.students.size() == 1)
+        {
+            cout << "There is no students" << endl;
+            system("pause");
+            return;
+        }
+
+        int idx;
+        show();
+        cout << "Choose Student to " << CYAN << "edit" << DEFAULT_COLOR << endl;
+        cout << "0 - BACK\n";
+        input(idx, 1, globals::db_students.students.size(), {0});
+        if (idx == 0)
+            return;
+
+        while (true)
+        {
+            system("cls");
+            showTop();
+
+            Student &stud = globals::db_students.students[idx - 1];
+
+            cout << '|' << setw(width::id)
+                 << centerString(idx < 10 ? ("0" + to_string(idx)) : to_string(idx), width::id, ' ')
+                 << setw(1) << '|';
+            cout << setw(width::name) << left << stud.name << setw(1) << '|';
+            cout << setw(width::number) << centerString(stud.number, width::number, ' ') << setw(1) << '|';
+            cout << right;
+            for (int i = 0; i < 5; i++)
+            {
+                bool b = stud.credits[i];
+                int curr_w = width::credits[i];
+                if (i == 4)
+                    curr_w--;
+                if (b)
+                {
+                    cout << GREEN;
+                    cout << setw(curr_w) << 'P';
+                }
+                else
+                {
+
+                    cout << RED;
+                    cout << setw(curr_w) << 'F';
+                }
+                if (i != 4)
+                    cout << ' ';
+                cout << DEFAULT_COLOR;
+            }
+            cout << " |";
+            cout << DEFAULT_COLOR;
+            for (int i = 0; i < 5; i++)
+            {
+                int x = stud.exams[i];
+                int curr_w = width::exams[i];
+                if (i == 4)
+                    curr_w--;
+
+                if (x > 4)
+                {
+                    cout << GREEN;
+                }
+                else if (x == 4)
+                {
+                    cout << YELLOW;
+                }
+                else
+                {
+                    cout << RED;
+                }
+
+                cout << setw(curr_w) << x;
+
+                if (i != 4)
+                    cout << ' ';
+                cout << DEFAULT_COLOR;
+            }
+            cout << " |";
+            cout << fixed << setw(width::average_mark) << setprecision(1) << stud.average_mark << setw(1) << "|";
+            if (stud.debts == 0)
+                cout << GREEN;
+            cout << setw(width::debts) << stud.debts;
+            cout << WHITE << '|';
+            cout << DEFAULT_COLOR;
+            cout << endl;
+
+            cout.fill('=');
+            cout << setw(width::sumStud() + 8) << '=' << endl;
+            cout.fill(' ');
+
+            int choice;
+            cout << "Choose field to " << CYAN << "edit" << DEFAULT_COLOR << endl;
+            cout << "1 - Name\n2 - Group\n3 - Credits\n4 - Exams\n0 - Back\n";
+            bool is_back = false;
+            while (true)
+            {
+                choice = getch();
+                choice -= '0';
+                if (choice == 0)
+                {
+                    is_back = true;
+                    break;
+                }
+                if (choice <= 4 && choice > 0)
+                {
+                    break;
+                }
+
+            }
+
+            if (is_back)
+                break;
+
+            UP_LINES(6);
+            CLEAR_TO_END();
+
+
+            switch (choice)
+            {
+                case 1:
+                {
+                    cout << "New name: ";
+                    stud.name = inputName(stud.name);
+
+                    break;
+                }
+                case 2:
+                {
+                    cout << "New group: ";
+                    stud.number = inputNumber(stud.number);
+                    break;
+                }
+                case 3:
+                {
+                    cout << "INAD passed  (old " << YELLOW << (stud.credits[0] ? 'y' : 'n') << DEFAULT_COLOR << ") [y/n] : ";
+                    stud.credits[0] = inputBool();
+                    cout << "\nIKG passed   (old " << YELLOW << (stud.credits[1] ? 'y' : 'n') << DEFAULT_COLOR << ") [y/n]: ";
+                    stud.credits[1] = inputBool();
+                    cout << "\nLANG passed  (old " << YELLOW << (stud.credits[2] ? 'y' : 'n') << DEFAULT_COLOR << ") [y/n]: ";
+                    stud.credits[2] = inputBool();
+                    cout << "\nHIST passed  (old " << YELLOW << (stud.credits[3] ? 'y' : 'n') << DEFAULT_COLOR << ") [y/n]: ";
+                    stud.credits[3] = inputBool();
+                    cout << "\nPOLIT passed (old " << YELLOW << (stud.credits[4] ? 'y' : 'n') << DEFAULT_COLOR << ") [y/n]: ";
+                    stud.credits[4] = inputBool();
+                    stud.update();
+                    break;
+                }
+                case 4:
+                {
+                    cout << "Input MATH mark (old " << YELLOW << stud.exams[0] << DEFAULT_COLOR << "):\n";
+                    input(stud.exams[0], 0, 10);
+                    cin.ignore(1000, '\n');
+                    cout << "Input OOP mark  (old " << YELLOW << stud.exams[1] << DEFAULT_COLOR << "):\n";
+                    input(stud.exams[1], 0, 10);
+                    cin.ignore(1000, '\n');
+                    cout << "Input TRPO mark (old " << YELLOW << stud.exams[2] << DEFAULT_COLOR << "): \n";
+                    input(stud.exams[2], 0, 10);
+                    cin.ignore(1000, '\n');
+                    cout << "Input PHYS mark (old " << YELLOW << stud.exams[3] << DEFAULT_COLOR << "):\n";
+                    input(stud.exams[3], 0, 10);
+                    cin.ignore(1000, '\n');
+                    cout << "Input OAIP mark (old " << YELLOW << stud.exams[4] << DEFAULT_COLOR << "):\n";
+                    input(stud.exams[4], 0, 10);
+                    cin.ignore(1000, '\n');
+                    stud.update();
+                    break;
+                }
+            }
+            globals::db_students.save();
+            cout << "Done!\n";
+            system("pause");
+        }
+    }
 }
 
 void students::delete_select()
@@ -507,39 +712,7 @@ void students::delete_select()
 
 void students::show()
 {
-    cout.fill('=');
-    cout << setw( width::sumStud() + 8) << '=' << endl;
-    cout.fill(' ');
-
-    //! INAD:IKG:LANG:HIST:POLIT ,  MATH:OOP:TRPO:PHYS:OAIP
-
-    cout << '|' <<setw(width::id + 1) << '|' << setw(width::name + 1) << '|' << setw(width::number + 1) << '|'
-         << setw(width::sumCredits()) << centerString("Credits", width::sumCredits(), ' ') << '|'
-         << setw(width::sumExams()) << centerString("Exams", width::sumExams(), ' ') << '|'
-         << setw(width::average_mark + 1) << '|' << setw(width::debts +1 ) << '|' << endl;
-
-    cout << '|' << setw(width::id) << centerString("ID", width::id, ' ') << setw(1) << '|';
-    cout << setw(width::name) << centerString("Name", width::name, ' ') << setw(1) << '|';
-    cout << setw(width::number) << centerString("Group#", width::number, ' ') << setw(1) << '|';
-
-    cout << setw(width::credits[0]) << "INAD" << setw(1) << ':';
-    cout << setw(width::credits[1]) << "IKG" << setw(1) << ':';
-    cout << setw(width::credits[2]) << "LANG" << setw(1) << ':';
-    cout << setw(width::credits[3]) << "HIST" << setw(1) << ':';
-    cout << left << setw(width::credits[4]) << "POLIT" << setw(1) << '|';
-
-    cout << right << setw(width::exams[0]) << "MATH" << setw(1) << ':';
-    cout << setw(width::exams[1]) << "OOP" << setw(1) << ':';
-    cout << setw(width::exams[2]) << "TRPO" << setw(1) << ':';
-    cout << setw(width::exams[3]) << "PHYS" << setw(1) << ':';
-    cout << left << setw(width::exams[4]) << "OAIP" << setw(1) << '|';
-
-    cout << setw(width::average_mark) << centerString("Avg", width::average_mark, ' ') << setw(1) << '|';
-    cout << setw(width::debts) << centerString("Debts", width::debts, ' ') << setw(1) << '|' << endl;
-
-    cout.fill('=');
-    cout << setw(width::sumStud() + 8) << '=' << endl;
-    cout.fill(' ');
+    showTop();
 
     int idx=1;
     bool is_back = false;
@@ -628,6 +801,46 @@ void students::show()
         cout << endl;
         idx++;
     }
-
+    cout.fill('=');
+    cout << setw( width::sumStud() + 8) << '=' << endl;
+    cout.fill(' ');
 }
+
+void students::showTop()
+{
+    cout.fill('=');
+    cout << setw( width::sumStud() + 8) << '=' << endl;
+    cout.fill(' ');
+
+    //! INAD:IKG:LANG:HIST:POLIT ,  MATH:OOP:TRPO:PHYS:OAIP
+
+    cout << '|' <<setw(width::id + 1) << '|' << setw(width::name + 1) << '|' << setw(width::number + 1) << '|'
+         << setw(width::sumCredits()) << centerString("Credits", width::sumCredits(), ' ') << '|'
+         << setw(width::sumExams()) << centerString("Exams", width::sumExams(), ' ') << '|'
+         << setw(width::average_mark + 1) << '|' << setw(width::debts +1 ) << '|' << endl;
+
+    cout << '|' << setw(width::id) << centerString("ID", width::id, ' ') << setw(1) << '|';
+    cout << setw(width::name) << centerString("Name", width::name, ' ') << setw(1) << '|';
+    cout << setw(width::number) << centerString("Group#", width::number, ' ') << setw(1) << '|';
+
+    cout << setw(width::credits[0]) << "INAD" << setw(1) << ':';
+    cout << setw(width::credits[1]) << "IKG" << setw(1) << ':';
+    cout << setw(width::credits[2]) << "LANG" << setw(1) << ':';
+    cout << setw(width::credits[3]) << "HIST" << setw(1) << ':';
+    cout << left << setw(width::credits[4]) << "POLIT" << setw(1) << '|';
+
+    cout << right << setw(width::exams[0]) << "MATH" << setw(1) << ':';
+    cout << setw(width::exams[1]) << "OOP" << setw(1) << ':';
+    cout << setw(width::exams[2]) << "TRPO" << setw(1) << ':';
+    cout << setw(width::exams[3]) << "PHYS" << setw(1) << ':';
+    cout << left << setw(width::exams[4]) << "OAIP" << setw(1) << '|';
+
+    cout << setw(width::average_mark) << centerString("Avg", width::average_mark, ' ') << setw(1) << '|';
+    cout << setw(width::debts) << centerString("Debts", width::debts, ' ') << setw(1) << '|' << endl;
+
+    cout.fill('=');
+    cout << setw(width::sumStud() + 8) << '=' << endl;
+    cout.fill(' ');
+}
+
 #pragma endregion

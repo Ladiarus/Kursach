@@ -8,7 +8,7 @@ using namespace std;
 class Student
 {
 public:
-    Student(string name, bool *credits, int *exams, string number);
+    Student(string name, string number, bool credits[5], int exams[5]);
     Student(){};
     string name;
     bool credits[5];

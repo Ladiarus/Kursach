@@ -12,12 +12,16 @@ string replaceChars(string s, char a, char b)
     return s;
 }
 
-Student::Student(string name, bool *credits, int *exams, string number)
+Student::Student(string name, string number, bool credits[5], int exams[5])
 {
     this->name = name;
     this->number = number;
-    *this->credits = credits;
-    *this->exams = *exams;
+    for(int i = 0; i < 5; i++)
+    {
+        this->credits[i] = credits[i];
+        this->exams[i] = exams[i];
+    }
+
     update();
 }
 

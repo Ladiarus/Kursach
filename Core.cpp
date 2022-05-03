@@ -121,9 +121,9 @@ Account *signUp()
 
 }
 
-string inputNumber()
+string inputNumber(string s)
 {
-    string s;
+    cout << s;
     while(true)
     {
         char c = getch();
@@ -140,7 +140,7 @@ string inputNumber()
                 s.pop_back();
             }
         }
-        else if(isdigit(c))
+        else if(isdigit(c) && s.length() <= 5)
         {
             s+=c;
             cout << c;
@@ -150,3 +150,86 @@ string inputNumber()
     return s;
 }
 
+string inputName(string s)
+{
+    cout << s;
+    while(true)
+    {
+        char c = getch();
+        if(c == 13) // Enter
+        {
+            if(s.length()>=6)
+                break;
+        }
+        else if(c == 8) // Backspace
+        {
+            if(s.length()!=0)
+            {
+                cout << "\b \b";
+                s.pop_back();
+            }
+        }
+        else if(isalpha(c) || (s.length() != 0 && s[s.length()-1] != ' ' && c == ' '))
+        {
+            s+=c;
+            cout << c;
+        }
+    }
+    cout<<endl;
+    return s;
+}
+
+bool inputBool()
+{
+    while(true)
+    {
+        char c = getch();
+        if (c == 'y')
+        {
+            cout << 'y';
+            return true;
+        }
+        else if (c == 'n') // Backspace
+        {
+            cout << 'n';
+            return false;
+        }
+    }
+}
+
+void *inputCredits(bool *arr)
+{
+    cout << "INAD passed [y/n]: ";
+    arr[0] = inputBool();
+    cout << "\nIKG passed [y/n]: ";
+    arr[1] = inputBool();
+    cout << "\nLANG passed [y/n]: ";
+    arr[2] = inputBool();
+    cout << "\nHIST passed [y/n]: ";
+    arr[3] = inputBool();
+    cout << "\nPOLIT passed [y/n]: ";
+    arr[4] = inputBool();
+    cout << endl;
+    return arr;
+}
+
+void *inputExams(int *arr)
+{
+    cout << "Input MATH mark:\n";
+    input(arr[0], 0, 10);
+    cin.ignore(1000,'\n');
+    cout << "Input OOP mark:\n";
+    input(arr[1], 0, 10);
+    cin.ignore(1000,'\n');
+    cout << "Input TRPO mark: \n";
+    input(arr[2], 0, 10);
+    cin.ignore(1000,'\n');
+    cout << "Input PHYS mark:\n";
+    input(arr[3], 0, 10);
+    cin.ignore(1000,'\n');
+    cout << "Input OAIP mark:\n";
+    input(arr[4], 0, 10);
+    cin.ignore(1000,'\n');
+    cout << endl;
+    return arr;
+}
