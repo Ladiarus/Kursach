@@ -22,6 +22,8 @@
 #define UP_LINE() (cout << "\033[1A")
 #define UP_LINES(x) (cout << "\033[" + to_string(x) + "F")
 #define DOWN_LINES(x) (cout << "\033[" + to_string(x) + "E")
+#define CURSOR_FORWARD (cout << "\033[1C")
+#define CURSOR_BACK (cout << "\033[1D")
 using namespace std;
 template <typename T>
 void input(T& a)
@@ -43,6 +45,7 @@ void input(T& a)
         }
         else
         {
+            std::cin.ignore(10000, '\n');
             return;
         }
     }
@@ -53,3 +56,4 @@ void input(double& x, double a, double b);
 void input(bool& b);
 std::string centerString(const std::string& s, int width, char fill_with);
 bool isFileEmpty(std::ifstream& file);
+string to_upper(string s);

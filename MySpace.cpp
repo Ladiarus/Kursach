@@ -13,6 +13,7 @@ void input(int& x, int a, int b)
         if (x < a || x > b)
         {
             cout << "Incorrect input [ " + to_string(a) + ", " + to_string(b) + " ]\n"<<"\a";
+            cin.ignore(1000, '\n');
             sleep(1);
             CLEAR_LINE();
             UP_LINE();
@@ -32,6 +33,7 @@ void input(double& x, double a, double b)
         if (x < a || x > b)
         {
             cout << "Incorrect input [ " + to_string(a) + ", " + to_string(b) + " ]\n"<<"\a";
+            cin.ignore(1000, '\n');
             sleep(1);
             CLEAR_LINE();
             UP_LINE();
@@ -106,4 +108,13 @@ void input(int &x, int a, int b, vector<int> additionalValues)
 bool isFileEmpty(ifstream &file)
 {
     return file.peek() == std::ifstream::traits_type::eof();
+}
+
+string to_upper(string s)
+{
+    for(char &c : s)
+    {
+        c = toupper(c);
+    }
+    return s;
 }

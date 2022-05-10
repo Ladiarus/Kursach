@@ -19,4 +19,3 @@ public:
     void approveAccount(int idx);
     int getAmountOfNotApproved();
 };
-

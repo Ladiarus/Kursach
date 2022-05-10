@@ -21,4 +21,3 @@ public:
     friend std::istream &operator >> (std::istream &is, Student &f);
     friend std::ostream& operator << (std::ostream &os, Student& f);
 };
-

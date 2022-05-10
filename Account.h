@@ -17,5 +17,3 @@ public:
     friend std::istream &operator >> (std::istream &is, Account &f);
     friend std::ostream& operator <<(std::ostream &os, Account& f);
 };
-
-

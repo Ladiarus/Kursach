@@ -2,6 +2,7 @@
 #include <conio.h>
 #include <string>
 #include <iomanip>
+#include <algorithm>
 #include "Menues.h"
 #include "MySpace.h"
 #include "Account.h"
@@ -12,7 +13,7 @@ using namespace std;
 namespace width
 {
     int id = 6, login = 15, hashed_password = 64, access = 7;
-    int name = 32, number = 8, debts = 7, average_mark = 5;
+    int name = 34, number = 8, debts = 7, average_mark = 5;
     //! INAD:IKG:LANG:HIST:POLIT ,  MATH:OOP:TRPO:PHYS:OAIP
     int credits[5] = {5, 3, 4, 4, 6};
     int exams[5] = {5, 3, 4, 4, 5};
@@ -123,8 +124,8 @@ void userMenuAdmin()
 void userMenuUser()
 {
     system("cls");
-    students::show();
-    system("pause");
+    students::show_select();
+
 }
 
 #pragma region accounts
@@ -477,9 +478,21 @@ void accounts::showTop()
 
 void students::show_select()
 {
-    system("cls");
-    show();
-    system("pause");
+    while(true)
+    {
+        system("cls");
+        if(globals::db_students.students.size()==0)
+        {
+            cout << "Students database is empty\n";
+            system("pause");
+            return;
+        }
+        show();
+        cout << "1 - Sort\n2 - Search\n3 - Individual task\n0 - Back\n";
+
+        if(chooseOption({students::sort_select, students::search_select, students::individualTask_select}))
+            return;
+    }
 }
 
 void students::add_select()
@@ -710,13 +723,13 @@ void students::delete_select()
     }
 }
 
-void students::show()
+void students::show(vector<Student> &students)
 {
     showTop();
 
     int idx=1;
     bool is_back = false;
-    for(Student &stud : globals::db_students.students)
+    for(Student &stud : students)
     {
         if(idx % 2==0)
         {
@@ -814,7 +827,7 @@ void students::showTop()
 
     //! INAD:IKG:LANG:HIST:POLIT ,  MATH:OOP:TRPO:PHYS:OAIP
 
-    cout << '|' <<setw(width::id + 1) << '|' << setw(width::name + 1) << '|' << setw(width::number + 1) << '|'
+    cout << right <<'|' <<setw(width::id + 1) << '|' << setw(width::name + 1) << '|' << setw(width::number + 1) << '|'
          << setw(width::sumCredits()) << centerString("Credits", width::sumCredits(), ' ') << '|'
          << setw(width::sumExams()) << centerString("Exams", width::sumExams(), ' ') << '|'
          << setw(width::average_mark + 1) << '|' << setw(width::debts +1 ) << '|' << endl;
@@ -833,7 +846,7 @@ void students::showTop()
     cout << setw(width::exams[1]) << "OOP" << setw(1) << ':';
     cout << setw(width::exams[2]) << "TRPO" << setw(1) << ':';
     cout << setw(width::exams[3]) << "PHYS" << setw(1) << ':';
-    cout << left << setw(width::exams[4]) << "OAIP" << setw(1) << '|';
+    cout << left << setw(width::exams[4]) << "OAIP" << setw(1) << '|' << right;
 
     cout << setw(width::average_mark) << centerString("Avg", width::average_mark, ' ') << setw(1) << '|';
     cout << setw(width::debts) << centerString("Debts", width::debts, ' ') << setw(1) << '|' << endl;
@@ -842,5 +855,170 @@ void students::showTop()
     cout << setw(width::sumStud() + 8) << '=' << endl;
     cout.fill(' ');
 }
+
+void students::sort_select()
+{
+    system("cls");
+    cout << "Choose sort field:\n";
+    cout << "1 - Name\n2 - Group\n3 - Average mark\n4 - Debts\n0 - Back\n";
+
+    char choice;
+    while (true)
+    {
+        choice = getch();
+        choice -= '0';
+        if (choice == 0)
+        {
+            return;
+
+        }
+        if (choice <= 4 && choice > 0)
+        {
+            break;
+        }
+    }
+
+    vector<Student> v = globals::db_students.students;
+
+    switch (choice)
+    {
+        case 1:
+            sort(v.begin(), v.end(), [](Student& a, Student& b) ->bool {return a.name < b.name;});
+            break;
+        case 2:
+            sort(v.begin(), v.end(), [](Student& a, Student& b) ->bool {return a.number < b.number;});
+            break;
+        case 3:
+            sort(v.begin(), v.end(), [](Student& a, Student& b) ->bool {return a.average_mark > b.average_mark;});
+            break;
+        case 4:
+            sort(v.begin(), v.end(), [](Student& a, Student& b) ->bool {return a.debts < b.debts;});
+            break;
+    }
+    system("cls");
+    show(v);
+    system("pause");
+
+}
+
+void students::individualTask_select()
+{
+    vector<Student> v = globals::db_students.students;
+    sort(v.begin(), v.end(), [](Student& a, Student& b) ->bool {return a.debts > b.debts;});
+    vector<Student> gr;
+    string group;
+    double sum = 0;
+    while(true)
+    {
+        system("cls");
+        show(v);
+        cout << "Input group number: ";
+        group = inputNumber();
+
+        for (Student &stud: v)
+        {
+            if (stud.number == group)
+            {
+                gr.push_back(stud);
+                sum += stud.average_mark;
+            }
+        }
+
+        if (gr.empty())
+        {
+            cout << "Group does not exist\n";
+            system("pause");
+        }
+        else
+            break;
+    }
+    system("cls");
+    show(gr);
+    cout << "Group " << group << " average mark: " << sum / gr.size() << endl;
+    system("pause");
+}
+
+void students::search_select()
+{
+    while(true)
+    {
+        system("cls");
+        cout << "Choose search field:\n";
+        cout << "1 - Name\n2 - Group\n3 - Average mark\n4 - Debts\n0 - Back\n";
+
+        char choice;
+        while (true)
+        {
+            choice = getch();
+            choice -= '0';
+            if (choice == 0)
+            {
+                return;
+
+            }
+            if (choice <= 4 && choice > 0)
+            {
+                break;
+            }
+        }
+        string s;
+        double a, b;
+        vector<Student> v;
+        switch (choice)
+        {
+            case 1:
+                cout << "Input name: ";
+                if(cin.peek()=='\n')
+                    cin.get();
+                getline(cin, s);
+                for (Student &stud: globals::db_students.students)
+                {
+                    if (to_upper(stud.name).find(to_upper(s))!=-1)
+                        v.push_back(stud);
+                }
+                break;
+            case 2:
+                cout << "Input group: ";
+                s = inputNumber();
+                for (Student &stud: globals::db_students.students)
+                {
+                    if (stud.number == s)
+                        v.push_back(stud);
+                }
+                break;
+            case 3:
+                cout << "Input min average mark\n";
+                input(a, 0.0, 10.0);
+                cin.ignore(10000, '\n');
+                cout << "Input max average mark\n";
+                input(b, a, 10.0);
+                cin.ignore(10000, '\n');
+                for (Student &stud: globals::db_students.students)
+                {
+                    if (stud.average_mark >= a && stud.average_mark <= b)
+                        v.push_back(stud);
+                }
+                break;
+            case 4:
+                cout << "Input debts amount: ";
+                input(a, 0, 10);
+                cin.ignore(10000, '\n');
+                for (Student &stud: globals::db_students.students)
+                {
+                    if (stud.debts == a)
+                        v.push_back(stud);
+                }
+                break;
+        }
+
+        system("cls");
+        if (v.size() == 0)
+            cout << "There is nothing to show\n";
+        else
+            show(v);
+        system("pause");
+    }
+}
+
 
 #pragma endregion

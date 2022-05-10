@@ -126,23 +126,25 @@ string inputNumber(string s)
     cout << s;
     while(true)
     {
+
         char c = getch();
-        if(c == 13) // Enter
+
+        if (c == 13) // Enter
         {
-            if(s.length()==6)
+            if (s.length() == 6)
                 break;
         }
-        else if(c == 8) // Backspace
+        else if (c == 8) // Backspace
         {
-            if(s.length()!=0)
+            if (s.length() != 0)
             {
                 cout << "\b \b";
                 s.pop_back();
             }
         }
-        else if(isdigit(c) && s.length() <= 5)
+        else if (isdigit(c) && s.length() <= 5)
         {
-            s+=c;
+            s += c;
             cout << c;
         }
     }

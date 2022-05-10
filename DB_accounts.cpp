@@ -22,10 +22,11 @@ void DB_accounts::update() {
         fout.open(file);
         fout.close();
     }
-
     if(isFileEmpty(fin))
     {
+        fin.close();
         this->add(createMainAdmin());
+        fin.open(file);
     }
     while(!fin.eof())
     {

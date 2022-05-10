@@ -1,6 +1,9 @@
 #pragma once
 #include <vector>
 #include "Core.h"
+#include "Student.h"
+#include "globals.h"
+
 bool mainMenu();
 
 bool chooseOption(std::vector<void(*)()> args);
@@ -27,8 +30,12 @@ namespace students
     void add_select();
     void edit_select();
     void delete_select();
-    void show();
+    void show(vector<Student> &students = globals::db_students.students);
     void showTop();
+    void sort_select();
+    void individualTask_select();
+    void search_select();
+    void sort();
 }
 namespace width
 {
