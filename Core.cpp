@@ -219,19 +219,14 @@ void *inputExams(int *arr)
 {
     cout << "Input MATH mark:\n";
     input(arr[0], 0, 10);
-    cin.ignore(1000,'\n');
     cout << "Input OOP mark:\n";
     input(arr[1], 0, 10);
-    cin.ignore(1000,'\n');
     cout << "Input TRPO mark: \n";
     input(arr[2], 0, 10);
-    cin.ignore(1000,'\n');
     cout << "Input PHYS mark:\n";
     input(arr[3], 0, 10);
-    cin.ignore(1000,'\n');
     cout << "Input OAIP mark:\n";
     input(arr[4], 0, 10);
-    cin.ignore(1000,'\n');
     cout << endl;
     return arr;
 }

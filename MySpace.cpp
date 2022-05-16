@@ -22,7 +22,9 @@ void input(int& x, int a, int b)
             CLEAR_LINE();
         }
         else
+        {
             return;
+        }
     }
 }
 void input(double& x, double a, double b)
@@ -42,7 +44,9 @@ void input(double& x, double a, double b)
             CLEAR_LINE();
         }
         else
+        {
             return;
+        }
     }
 }
 void input(bool& b)

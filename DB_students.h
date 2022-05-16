@@ -3,7 +3,7 @@
 #include <vector>
 #include "Student.h"
 using namespace std;
-class DB_students
+class DB_students//класс для работы со студентами
 {
 public:
     DB_students(string file);
@@ -11,8 +11,8 @@ public:
     ifstream fin;
     ofstream fout;
     vector<Student> students;
-    void update();
-    void save();
-    void add(Student& acc);
-    void deleteStudent(int idx);
+    void update();//обновить массив
+    void save();//сохранить в файл
+    void add(Student& acc);//добавить в массив
+    void deleteStudent(int idx);//удалить студента
 };

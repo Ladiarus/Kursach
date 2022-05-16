@@ -53,3 +53,13 @@
 17	695	6738966951689994	CMakeFiles/Kursach.dir/DB_students.cpp.obj	f74cdb077364100d
 12	1188	6738966956605843	CMakeFiles/Kursach.dir/Menues.cpp.obj	ec3fb28bb6505adc
 1188	1547	6738966960151457	Kursach.exe	55042c18096d64bf
+12	998	6740023181370305	CMakeFiles/Kursach.dir/Account.cpp.obj	c3ac1e30417c9ea0
+2	1006	6740023181465323	CMakeFiles/Kursach.dir/main.cpp.obj	b1da3149793f88eb
+20	1024	6740023181520334	CMakeFiles/Kursach.dir/DB_accounts.cpp.obj	8f6a17f93181612f
+25	1029	6740023181710365	CMakeFiles/Kursach.dir/Student.cpp.obj	46994a46304e7420
+22	1042	6740023181870393	CMakeFiles/Kursach.dir/globals.cpp.obj	962402cd4f048684
+30	1046	6740023181915400	CMakeFiles/Kursach.dir/DB_students.cpp.obj	f74cdb077364100d
+14	1047	6740023181940405	CMakeFiles/Kursach.dir/Core.cpp.obj	246c9de0cdba479b
+16	1160	6740023183050598	CMakeFiles/Kursach.dir/MySpace.cpp.obj	d82748debf3f4037
+18	1671	6740023188171491	CMakeFiles/Kursach.dir/Menues.cpp.obj	ec3fb28bb6505adc
+1671	2037	6740023191783692	Kursach.exe	55042c18096d64bf

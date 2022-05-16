@@ -49,11 +49,11 @@ void input(T& a)
             return;
         }
     }
-}
+}//обертка для пользовательского ввода
 void input(int& x, int a, int b);
 void input(int& x, int a, int b, vector<int> additionalValues);
 void input(double& x, double a, double b);
 void input(bool& b);
-std::string centerString(const std::string& s, int width, char fill_with);
-bool isFileEmpty(std::ifstream& file);
-string to_upper(string s);
+std::string centerString(const std::string& s, int width, char fill_with);//центрирует строку, ограничивает пробелами
+bool isFileEmpty(std::ifstream& file);//проверка пуст ли файл
+string to_upper(string s);//строку в верхний регистр

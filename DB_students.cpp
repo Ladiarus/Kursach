@@ -39,7 +39,6 @@ void DB_students::save() {
     for(Student acc : students)
         fout<<acc;
     fout.close();
-    //update();
 }
 
 void DB_students::deleteStudent(int idx)

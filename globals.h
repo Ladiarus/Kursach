@@ -6,8 +6,8 @@
 
 namespace globals {
 
-    extern std::string filenameAccounts;
-    extern std::string filenameStudents;
-    extern DB_accounts db_accounts;
-    extern DB_students db_students;
+    extern std::string filenameAccounts;//имя файла аккаунтов
+    extern std::string filenameStudents;//имя файла студентов
+    extern DB_accounts db_accounts;//объект класса работы с аккаунтами
+    extern DB_students db_students;//объект класса работы со студентами
 }
